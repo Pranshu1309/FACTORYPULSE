@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { Activity, AlertTriangle, ArrowDownRight, Bell, Check, ChevronDown, CircleHelp, ClipboardList, Factory, Gauge, LayoutDashboard, Menu, Settings, ShieldCheck, Sparkles, Users, Wrench } from 'lucide-react';
+import { useMemo, useState, useEffect } from 'react';
+import { Activity, AlertTriangle, ArrowDownRight, Bell, Check, ChevronDown, CircleHelp, ClipboardList, Factory, Gauge, LayoutDashboard, Menu, Settings, ShieldCheck, Sparkles, Users, Wrench, Moon, Sun } from 'lucide-react';
 import { useFactoryData } from './context/FactoryContext.jsx';
 
 export const initialData = {
@@ -35,6 +35,16 @@ export default function App() {
   const [toast, setToast] = useState('');
   const [mobileMenu, setMobileMenu] = useState(false);
   const [page, setPage] = useState('Shift Planner');
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
+
+  function toggleDarkMode() {
+    setDarkMode((prev) => {
+      const next = !prev;
+      localStorage.setItem('theme', next ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark', next);
+      return next;
+    });
+  }
 
   const shiftWorkers = useMemo(() => data.workers.filter((worker) => worker.shift === data.shift), [data]);
   const skills = useMemo(() => [...new Set(data.workers.flatMap((worker) => Object.keys(worker.skills)))].sort(), [data.workers]);
@@ -111,6 +121,10 @@ export default function App() {
     setDrafts((current) => ({ ...current, [machine.id]: workerId ? { workerId, reason: `Manager selected ${worker.name.split(' ')[0]} for this machine.`, alternative: null } : getSuggestion(machine) }));
   }
 
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+  }, [darkMode]);
+
   const navItems = [
     { label: 'Overview', icon: LayoutDashboard }, { label: 'Workers', icon: Users }, { label: 'Machines', icon: Factory },
     { label: 'Production', icon: Activity }, { label: 'Safety', icon: ShieldCheck }, { label: 'Maintenance', icon: Wrench }, { label: 'Shift Planner', icon: ClipboardList },
@@ -125,7 +139,7 @@ export default function App() {
       <div className="sidebar-bottom"><div className="shift-chip"><span className="live-dot" /><span>Morning shift in progress</span></div><button className="nav-link"><Settings size={18} /><span>Settings</span></button><div className="user-profile"><div className="avatar avatar-purple">AS</div><span><b>Admin Supervisor</b><small>Plant manager</small></span><ChevronDown size={15} /></div></div>
     </aside>
     <div className="main-column">
-      <header className="topbar"><button className="menu-button" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Open menu"><Menu size={21} /></button><div className="breadcrumb"><span>Workspace</span><span className="crumb-slash">/</span><b>{page}</b></div><div className="topbar-actions"><span className="date-label">Tue, 25 Nov 2026</span><button className="icon-button notification-button" aria-label="Notifications"><Bell size={19} /><i /></button><div className="avatar avatar-green">AS</div></div></header>
+      <header className="topbar"><button className="menu-button" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Open menu"><Menu size={21} /></button><div className="breadcrumb"><span>Workspace</span><span className="crumb-slash">/</span><b>{page}</b></div><div className="topbar-actions"><span className="date-label">Tue, 25 Nov 2026</span><button className="icon-button notification-button" aria-label="Notifications"><Bell size={19} /><i /></button><button className={`icon-button theme-toggle ${darkMode ? 'dark' : ''}`} onClick={toggleDarkMode} aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>{darkMode ? <Sun size={19} /> : <Moon size={19} />}</button><div className="avatar avatar-green">AS</div></div></header>
       <main className="content"><div className="page-heading"><div><div className="eyebrow"><span className="live-dot" /> LIVE OPERATIONS <span className="eyebrow-divider">·</span> RAJKOT WORKS</div><h1>Shift Planner</h1><p>Plan your crew. Keep every machine moving.</p></div><div className="heading-date"><span>SHIFT DATE</span><b>Tuesday, 25 November 2026</b></div></div>
 
         {toast && <div className="toast"><Check size={17} />{toast}<button onClick={() => setToast('')}>Dismiss</button></div>}

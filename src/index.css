@@ -7,3 +7,46 @@
 @media(max-width:720px){body{padding-bottom:65px}.sidebar{transform:translateX(-102%);transition:transform .2s ease;width:260px;box-shadow:5px 0 22px #17281d16}.sidebar.mobile-open{transform:translateX(0)}.main-column{margin-left:0}.topbar{height:56px;padding:0 16px}.menu-button{display:grid;place-items:center;border:0;background:none;padding:6px;margin-left:-6px}.breadcrumb{margin-right:auto;margin-left:10px;font-size:10px;gap:8px}.topbar-actions{gap:10px}.topbar-actions>.avatar{width:29px;height:29px}.date-label{display:none}.content{padding:24px 16px 21px}.page-heading{align-items:flex-start;margin-bottom:20px}.page-heading h1{font-size:25px}.page-heading p{font-size:11px}.heading-date{padding-top:8px}.heading-date span{font-size:7px}.heading-date b{font-size:9px}.eyebrow{font-size:8px;gap:6px}.section-title h2{font-size:14px}.section-title>div>span{font-size:9px}.shift-section .section-title{display:block}.shift-toggle{margin-top:12px}.shift-toggle button{flex:1;min-width:0;padding:8px 10px}.crew-card{padding:12px 12px 3px}.worker-list{grid-template-columns:1fr;column-gap:0}.worker-row:nth-last-child(2){border-bottom:1px solid #f0f2f0}.worker-row:last-child{border-bottom:0}.worker-row{min-height:55px}.card-heading h3{font-size:11px}.card-heading p{font-size:9px}.crew-count{font-size:9px}.allocation-heading{align-items:flex-start}.allocation-heading>div{padding-top:2px}.suggest-button{font-size:9px;padding:0 10px;min-height:36px;white-space:nowrap}.suggest-button svg{width:15px}.machine-list{grid-template-columns:1fr;gap:8px}.machine-card{padding:12px 13px 10px}.machine-name-line h3{font-size:11px}.machine-meta{font-size:8px}.assigned-person b{max-width:190px}.override-select select{max-width:130px}.reason-line{font-size:8px}.allocation-footer{align-items:flex-start;gap:10px}.allocation-footer>span{max-width:150px;line-height:1.4;font-size:8px}.confirm-button{padding:0 10px;font-size:9px;white-space:nowrap}.skills-section .section-title{align-items:flex-start;gap:8px}.matrix-legend{align-items:flex-start;flex-direction:column;gap:5px;padding-top:2px}.matrix-wrap table{min-width:540px}.page-footer{font-size:7px;gap:8px}.mobile-tabs{display:flex;position:fixed;z-index:4;bottom:0;left:0;right:0;height:62px;padding-bottom:env(safe-area-inset-bottom);background:#fff;border-top:1px solid #e9ede9;justify-content:space-around}.mobile-tabs button{position:relative;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;border:0;background:transparent;color:#9aa49d;font-size:8px}.mobile-tabs button.tab-active{color:#278653;font-weight:700}.mobile-tabs button.tab-active:before{content:'';position:absolute;top:-1px;width:25px;height:2px;background:#29955f;border-radius:0 0 3px 3px}.toast,.replacement-banner{margin-top:0}}
 @media(max-width:390px){.content{padding-left:12px;padding-right:12px}.page-heading h1{font-size:23px}.heading-date b{font-size:8px}.allocation-heading{gap:6px}.suggest-button{padding:0 8px;font-size:8px}.worker-info span{font-size:8px}.allocation-footer>span{max-width:125px}.matrix-legend>span{font-size:7px}.assigned-person b{max-width:150px}}
 .warning-banner{display:flex;align-items:center;gap:9px;background:#fff4e3;border:1px solid #f2dfc1;color:#a36e22;border-radius:8px;padding:9px 12px;font-size:10px;margin:-7px 0 13px}.warning-banner>svg{flex-shrink:0}.warning-banner button{margin-left:auto;border:0;background:none;color:#9f8659;font-size:18px}
+
+.icon-button.theme-toggle {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  border: 1px solid #e8ece8;
+  background: #fff;
+  color: #718078;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.icon-button.theme-toggle:hover {
+  background: #f5f8f5;
+  color: #26774d;
+}
+.dark .icon-button.theme-toggle {
+  background: #1e2925;
+  border-color: #3a4a3c;
+  color: #a3b1a7;
+}
+.dark .icon-button.theme-toggle:hover {
+  background: #29382f;
+  color: #4ade80;
+}
+
+.dark {
+  --ink: #fafafa;
+  --muted: #a3b1a7;
+  --line: #3a4a3c;
+  --paper: #1e2925;
+  background-color: #121212;
+  color: #fafafa;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+  font-weight: 400;
+}
+body.dark,
+html.dark {
+  background: #121212;
+}
