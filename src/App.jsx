@@ -50,6 +50,7 @@ export default function App() {
   const skills = useMemo(() => [...new Set(data.workers.flatMap((worker) => Object.keys(worker.skills)))].sort(), [data.workers]);
   const soleSkills = useMemo(() => new Set(skills.filter((skill) => data.workers.filter((worker) => worker.skills[skill] > 0).length === 1)), [skills, data.workers]);
   const allocationsForShift = data.allocations[data.shift] || {};
+  const assignmentSource = { ...allocationsForShift, ...Object.fromEntries(Object.entries(drafts).map(([machineId, draft]) => [machineId, draft?.workerId])) };
 
   function getSuggestion(machine, excluded = new Set()) {
     const present = data.workers.filter((worker) => worker.shift === data.shift && worker.present && !excluded.has(worker.id));
@@ -107,6 +108,11 @@ export default function App() {
   }
 
   function confirmAllocation() {
+    const assignedWorkerIds = Object.values(drafts).map((draft) => draft?.workerId).filter(Boolean);
+    if (new Set(assignedWorkerIds).size !== assignedWorkerIds.length) {
+      setToast('Each worker can only be assigned to one machine per shift.');
+      return;
+    }
     setData((current) => ({
       ...current,
       workers: current.workers.map((worker) => ({ ...worker, assignedMachineId: Object.keys(drafts).find((machineId) => drafts[machineId]?.workerId === worker.id) || null })),
@@ -118,7 +124,13 @@ export default function App() {
 
   function pickOverride(machine, workerId) {
     const worker = data.workers.find((item) => item.id === workerId);
-    setDrafts((current) => ({ ...current, [machine.id]: workerId ? { workerId, reason: `Manager selected ${worker.name.split(' ')[0]} for this machine.`, alternative: null } : getSuggestion(machine) }));
+    const otherMachine = data.machines.find((item) => item.id !== machine.id && assignmentSource[item.id] === workerId);
+    if (workerId && otherMachine) {
+      setToast(`${worker.name.split(' ')[0]} is already assigned to ${otherMachine.name}. One worker can run one machine per shift.`);
+      return;
+    }
+    const excluded = new Set(data.machines.filter((item) => item.id !== machine.id).map((item) => assignmentSource[item.id]).filter(Boolean));
+    setDrafts((current) => ({ ...current, [machine.id]: workerId ? { workerId, reason: `Manager selected ${worker.name.split(' ')[0]} for this machine.`, alternative: null } : getSuggestion(machine, excluded) }));
   }
 
   useEffect(() => {
@@ -135,9 +147,10 @@ export default function App() {
       <a className="brand" href="#planner" onClick={() => setPage('Shift Planner')}><span className="brand-mark"><Factory size={20} /></span><span>Factory<span className="brand-light">Pulse</span><small>SHOP FLOOR CONTROL</small></span></a>
       <div className="plant-select"><span className="plant-icon"><Factory size={18} /></span><span><b>Rajkot Works</b><small>Gujarat, India</small></span><ChevronDown size={15} /></div>
       <div className="nav-label">WORKSPACE</div>
-      <nav>{navItems.map(({ label, icon: Icon }) => <button key={label} className={`nav-link ${page === label ? 'active' : ''}`} onClick={() => { setPage(label); setMobileMenu(false); }}><Icon size={18} /><span>{label}</span>{label === 'Safety' && <span className="nav-dot" />}</button>)}</nav>
+      <nav>{navItems.map(({ label, icon: Icon }) => <button type="button" key={label} className={`nav-link ${page === label ? 'active' : ''}`} onClick={() => { setPage(label); setMobileMenu(false); }}><Icon size={18} /><span>{label}</span>{label === 'Safety' && <span className="nav-dot" />}</button>)}</nav>
       <div className="sidebar-bottom"><div className="shift-chip"><span className="live-dot" /><span>Morning shift in progress</span></div><button className="nav-link"><Settings size={18} /><span>Settings</span></button><div className="user-profile"><div className="avatar avatar-purple">AS</div><span><b>Admin Supervisor</b><small>Plant manager</small></span><ChevronDown size={15} /></div></div>
     </aside>
+    {mobileMenu && <button type="button" className="sidebar-backdrop" aria-label="Close menu" onClick={() => setMobileMenu(false)} />}
     <div className="main-column">
       <header className="topbar"><button className="menu-button" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Open menu"><Menu size={21} /></button><div className="breadcrumb"><span>Workspace</span><span className="crumb-slash">/</span><b>{page}</b></div><div className="topbar-actions"><span className="date-label">Tue, 25 Nov 2026</span><button className="icon-button notification-button" aria-label="Notifications"><Bell size={19} /><i /></button><button className={`icon-button theme-toggle ${darkMode ? 'dark' : ''}`} onClick={toggleDarkMode} aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>{darkMode ? <Sun size={19} /> : <Moon size={19} />}</button><div className="avatar avatar-green">AS</div></div></header>
       <main className="content"><div className="page-heading"><div><div className="eyebrow"><span className="live-dot" /> LIVE OPERATIONS <span className="eyebrow-divider">·</span> RAJKOT WORKS</div><h1>Shift Planner</h1><p>Plan your crew. Keep every machine moving.</p></div><div className="heading-date"><span>SHIFT DATE</span><b>Tuesday, 25 November 2026</b></div></div>
@@ -155,8 +168,9 @@ export default function App() {
             const savedWorkerId = allocationsForShift[machine.id];
             const assignedWorker = data.workers.find((worker) => worker.id === (draft?.workerId || savedWorkerId));
             const isSuggested = suggested && Boolean(draft);
+            const unavailableIds = new Set(data.machines.filter((item) => item.id !== machine.id).map((item) => assignmentSource[item.id]).filter(Boolean));
             return <article className={`machine-card ${!assignedWorker && isSuggested ? 'machine-unstaffed' : ''}`} key={machine.id}><div className="machine-card-main"><div className={`machine-icon ${statusStyle[machine.status]}`}><Gauge size={20} /></div><div className="machine-details"><div className="machine-name-line"><h3>{machine.name}</h3><span className={`machine-status ${statusStyle[machine.status]}`}><i />{machine.status}</span></div><div className="machine-meta"><span>{machine.code}</span><i>·</i><span>{machine.area}</span><i>·</i><span>Needs {machine.requiredSkill} L{machine.minLevel}+</span></div></div>{isSuggested && !assignedWorker && <span className="unstaffed-badge"><AlertTriangle size={13} /> Unstaffed</span>}</div>
-              <div className="assignment-row"><div className="assigned-person"><div className={`avatar small-avatar ${assignedWorker ? 'avatar-purple' : 'empty-avatar'}`}>{assignedWorker?.short || <Users size={14} />}</div><div><span className="assignment-label">{isSuggested ? assignedWorker ? 'SUGGESTED OPERATOR' : 'NO ELIGIBLE OPERATOR' : assignedWorker ? 'CURRENT OPERATOR' : 'NOT ASSIGNED'}</span><b className={assignedWorker ? '' : 'muted-name'}>{assignedWorker?.name || 'Awaiting assignment'}</b></div></div><label className="override-select"><span>Override</span><select aria-label={`Override ${machine.name} worker`} value={draft?.workerId || ''} onChange={(event) => pickOverride(machine, event.target.value)}><option value="">{isSuggested ? 'Choose worker' : 'Select worker'}</option>{data.workers.filter((worker) => worker.shift === data.shift && worker.present).map((worker) => <option key={worker.id} value={worker.id}>{worker.name}</option>)}</select><ChevronDown size={14} /></label></div>
+              <div className="assignment-row"><div className="assigned-person"><div className={`avatar small-avatar ${assignedWorker ? 'avatar-purple' : 'empty-avatar'}`}>{assignedWorker?.short || <Users size={14} />}</div><div><span className="assignment-label">{isSuggested ? assignedWorker ? 'SUGGESTED OPERATOR' : 'NO ELIGIBLE OPERATOR' : assignedWorker ? 'CURRENT OPERATOR' : 'NOT ASSIGNED'}</span><b className={assignedWorker ? '' : 'muted-name'}>{assignedWorker?.name || 'Awaiting assignment'}</b></div></div><label className="override-select"><span>Override</span><select aria-label={`Override ${machine.name} worker`} value={draft?.workerId || ''} onChange={(event) => pickOverride(machine, event.target.value)}><option value="">{isSuggested ? 'Choose worker' : 'Select worker'}</option>{data.workers.filter((worker) => worker.shift === data.shift && worker.present && (!unavailableIds.has(worker.id) || worker.id === (draft?.workerId || savedWorkerId))).map((worker) => <option key={worker.id} value={worker.id}>{worker.name}</option>)}</select><ChevronDown size={14} /></label></div>
               {isSuggested && <div className={`reason-line ${assignedWorker ? '' : 'reason-warning'}`}>{assignedWorker ? <><span className="reason-check"><Check size={12} /></span>{draft.reason}</> : <><AlertTriangle size={14} />{draft.reason} <span className="alternative">Closest: {draft.alternative}</span></>}</div>}
             </article>;
           })}</div>
