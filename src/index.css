@@ -72,6 +72,10 @@ body { font-size: 15px; }
 .reason-line { font-size: 10px; line-height: 1.4; }
 .toast, .replacement-banner, .warning-banner { font-size: 12px; line-height: 1.4; }
 .sidebar-backdrop { display: none; }
+.screen-placeholder { min-height: 250px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 12px; padding: 28px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; color: var(--ink); }
+.screen-placeholder > svg { color: var(--green); }
+.screen-placeholder h2 { margin: 0; font: 700 20px Manrope, sans-serif; }
+.screen-placeholder p { margin: 0 0 6px; color: var(--muted); font-size: 14px; }
 
 @media(max-width:720px) {
   .sidebar { z-index: 11; max-height: 100dvh; }
