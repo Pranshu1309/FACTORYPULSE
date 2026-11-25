@@ -76,6 +76,37 @@ body { font-size: 15px; }
 .screen-placeholder > svg { color: var(--green); }
 .screen-placeholder h2 { margin: 0; font: 700 20px Manrope, sans-serif; }
 .screen-placeholder p { margin: 0 0 6px; color: var(--muted); font-size: 14px; }
+.module-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.module-card, .module-panel { min-width: 0; padding: 20px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; color: var(--ink); }
+.module-card { min-height: 136px; }
+.module-kicker { display: block; margin-bottom: 10px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .8px; }
+.module-card strong { display: block; font: 800 25px Manrope, sans-serif; }
+.module-card p, .settings-panel>p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
+.module-panel { grid-column: 1 / -1; }
+.module-panel h2 { margin: 0 0 15px; font: 700 17px Manrope, sans-serif; }
+.module-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 54px; padding: 10px 0; border-top: 1px solid var(--line); }
+.module-row>span:first-child { display: grid; gap: 4px; }
+.module-row small { color: var(--muted); font-size: 11px; }
+.status-text { font-size: 12px; text-transform: capitalize; }
+.status-text.operating { color: #248b62; }
+.status-text.idle { color: #bd8127; }
+.status-text.fault { color: #c54e4e; }
+.production-row { padding: 14px 0; border-top: 1px solid var(--line); }
+.production-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 9px; }
+.production-label span { display: grid; gap: 4px; }
+.production-label small { color: var(--muted); font-size: 11px; }
+.production-label strong { font-size: 13px; white-space: nowrap; }
+.progress-track { height: 9px; overflow: hidden; border-radius: 8px; background: #e9eee9; }
+.progress-track span { display: block; height: 100%; border-radius: inherit; background: var(--green); }
+.settings-panel .module-row { flex-wrap: wrap; }
+@media(max-width:720px) {
+  .module-grid { grid-template-columns: 1fr 1fr; gap: 9px; }
+  .module-card, .module-panel { padding: 15px; }
+  .module-card { min-height: 125px; }
+  .module-card strong { font-size: 22px; }
+  .module-card p { font-size: 11px; }
+  .module-row { align-items: flex-start; }
+}
 
 @media(max-width:720px) {
   .sidebar { z-index: 11; max-height: 100dvh; }
