@@ -125,3 +125,109 @@ body { font-size: 15px; }
   .mobile-tabs { height: 68px; }
   .mobile-tabs button { min-height: 60px; font-size: 10px; }
 }
+
+/* Quiet charcoal palette with a single mint accent. */
+html.dark {
+  color-scheme: dark;
+  --green: #69d5a4;
+  --green-dark: #48b985;
+  --ink: #e6edf3;
+  --muted: #96a3af;
+  --line: #293440;
+  --paper: #151c24;
+  background: #0d1218;
+  color: var(--ink);
+}
+html.dark body,
+body.dark,
+html.dark .app-shell { background: #0d1218; color: var(--ink); }
+html.dark .sidebar,
+html.dark .topbar,
+html.dark .mobile-tabs { background: #111820; border-color: #26313d; }
+html.dark .brand { color: #e6edf3; }
+html.dark .brand small,
+html.dark .plant-select small,
+html.dark .user-profile small { color: #8997a4; }
+html.dark .brand-mark,
+html.dark .plant-icon { background: #1a3028; color: #73d9ae; }
+html.dark .plant-select,
+html.dark .crew-card,
+html.dark .machine-card,
+html.dark .matrix-wrap,
+html.dark .module-card,
+html.dark .module-panel { background: #151c24; border-color: #293440; box-shadow: none; color: #e6edf3; }
+html.dark .nav-link { color: #a6b2bd; }
+html.dark .nav-link:hover { background: #1b2530; }
+html.dark .nav-link.active { background: #1a3028; color: #87e0b8; }
+html.dark .nav-link.active:before { background: #69d5a4; }
+html.dark .nav-label,
+html.dark .breadcrumb,
+html.dark .eyebrow,
+html.dark .heading-date span,
+html.dark .machine-meta,
+html.dark .assignment-label,
+html.dark .page-footer { color: #8997a4; }
+html.dark .breadcrumb b,
+html.dark .heading-date b,
+html.dark .page-heading h1,
+html.dark .section-title h2,
+html.dark .machine-name-line h3,
+html.dark .card-heading h3,
+html.dark .module-panel h2 { color: #e6edf3; }
+html.dark .page-heading p,
+html.dark .section-title>div>span,
+html.dark .card-heading p,
+html.dark .worker-info span,
+html.dark .matrix-legend>span,
+html.dark .matrix-note,
+html.dark .module-card p,
+html.dark .module-row small,
+html.dark .production-label small,
+html.dark .settings-panel>p { color: #96a3af; }
+html.dark .shift-toggle button,
+html.dark .override-select select,
+html.dark .icon-button.theme-toggle { background: #111820; border-color: #2b3743; color: #c1ccd5; }
+html.dark .shift-toggle button.selected { background: #1a3028; border-color: #315b49; color: #87e0b8; }
+html.dark .shift-toggle button>small { color: #9aa9b4; }
+html.dark .presence-toggle { background: #1c2731; border-color: #34414d; color: #a6b2bd; }
+html.dark .presence-toggle.is-present { background: #183126; border-color: #28513d; color: #87e0b8; }
+html.dark .worker-row,
+html.dark .card-heading,
+html.dark .assignment-row,
+html.dark .module-row,
+html.dark .production-row,
+html.dark .matrix-wrap td { border-color: #293440; }
+html.dark .crew-count,
+html.dark .skill-pill { background: #1c3329; color: #8de0b8; }
+html.dark .skill-single { background: #382d1c; color: #f1c579; }
+html.dark .matrix-wrap thead { background: #111820; }
+html.dark .matrix-wrap th { color: #96a3af; }
+html.dark .sole-skill-dot { background: #382d1c; color: #f1c579; }
+html.dark .legend-skill { background: #1c3329; }
+html.dark .legend-single { background: #382d1c; }
+html.dark .machine-icon.operating { background: #1a3028; color: #69d5a4; }
+html.dark .machine-icon.idle { background: #342a1b; color: #e5b35c; }
+html.dark .machine-icon.fault { background: #392326; color: #f08080; }
+html.dark .machine-status.operating,
+html.dark .status-text.operating { color: #69d5a4; }
+html.dark .machine-status.idle,
+html.dark .status-text.idle { color: #e5b35c; }
+html.dark .machine-status.fault,
+html.dark .status-text.fault { color: #f08080; }
+html.dark .machine-unstaffed { border-color: #69502d; }
+html.dark .unstaffed-badge { background: #382d1c; color: #f1c579; }
+html.dark .confirm-button { background: #151c24; border-color: #3a765a; color: #87e0b8; }
+html.dark .confirm-button:hover:not(:disabled) { background: #1b392c; color: #a7f0ce; }
+html.dark .confirm-button:disabled { background: #202832; border-color: #293440; color: #71808c; }
+html.dark .suggest-button { background: #287b5b; color: #f0fff8; }
+html.dark .suggest-button:hover { background: #32916b; }
+html.dark .toast { background: #183126; color: #a5edcc; }
+html.dark .replacement-banner,
+html.dark .warning-banner { background: #332a1d; border-color: #5c482b; color: #f1c579; }
+html.dark .banner-icon { background: #4a3920; color: #f1c579; }
+html.dark .progress-track { background: #27323d; }
+html.dark .mobile-tabs button { color: #92a0ad; }
+html.dark .mobile-tabs button.tab-active { color: #87e0b8; }
+html.dark .icon-button,
+html.dark .menu-button { color: #b2bec8; }
+html.dark .notification-button i { border-color: #111820; }
