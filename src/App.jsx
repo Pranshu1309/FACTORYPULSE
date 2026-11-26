@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { Activity, AlertTriangle, ArrowDownRight, Bell, Check, ChevronDown, CircleHelp, ClipboardList, Factory, Gauge, LayoutDashboard, Menu, Settings, ShieldCheck, Sparkles, Users, UserRound, Wrench, Moon, Sun } from 'lucide-react';
+import { Activity, AlertTriangle, ArrowDownRight, Bell, Check, ChevronDown, ChevronLeft, ChevronRight, CircleHelp, ClipboardList, Factory, Gauge, LayoutDashboard, Menu, Settings, ShieldCheck, Sparkles, Users, UserRound, Wrench, Moon, Sun } from 'lucide-react';
 import { useFactoryData } from './context/FactoryContext.jsx';
 
 export const initialData = {
@@ -40,6 +40,7 @@ export default function App() {
   const [suggested, setSuggested] = useState(false);
   const [toast, setToast] = useState('');
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => localStorage.getItem('sidebar-collapsed') === 'true');
   const [page, setPage] = useState('Overview');
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
@@ -49,6 +50,14 @@ export default function App() {
       const next = !prev;
       localStorage.setItem('theme', next ? 'dark' : 'light');
       document.documentElement.classList.toggle('dark', next);
+      return next;
+    });
+  }
+
+  function toggleSidebar() {
+    setSidebarCollapsed((previous) => {
+      const next = !previous;
+      localStorage.setItem('sidebar-collapsed', String(next));
       return next;
     });
   }
@@ -156,11 +165,11 @@ export default function App() {
   const safetyIncidents = data.workers.reduce((sum, worker) => sum + worker.incidentCount, 0);
   const shiftHours = data.shift === 'Morning' ? '6:00 AM – 2:00 PM' : '2:00 PM – 10:00 PM';
 
-  return <div className="app-shell">
+  return <div className={`app-shell ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
     <aside className={`sidebar ${mobileMenu ? 'mobile-open' : ''}`}>
-      <a className="brand" href="#overview" onClick={() => { setPage('Overview'); setMobileMenu(false); }}><span className="brand-mark"><img src="/favicon.svg" alt="" /></span><span>Factory<span className="brand-light">Pulse</span><small>SHOP FLOOR CONTROL</small></span></a>
+      <div className="sidebar-brand-row"><a className="brand" href="#overview" onClick={() => { setPage('Overview'); setMobileMenu(false); }}><span className="brand-mark"><img src="/favicon.svg" alt="" /></span><span className="brand-copy">Factory<span className="brand-light">Pulse</span><small>SHOP FLOOR CONTROL</small></span></a><button type="button" className="sidebar-collapse-button" onClick={toggleSidebar} aria-label={sidebarCollapsed ? 'Expand navigation' : 'Collapse navigation'} aria-expanded={!sidebarCollapsed} title={sidebarCollapsed ? 'Expand navigation' : 'Collapse navigation'}>{sidebarCollapsed ? <ChevronRight size={17} /> : <ChevronLeft size={17} />}</button></div>
       <div className="nav-label">WORKSPACE</div>
-      <nav>{navItems.map(({ label, icon: Icon }) => <button type="button" key={label} className={`nav-link ${page === label ? 'active' : ''}`} onClick={() => { setPage(label); setMobileMenu(false); }}><Icon size={18} /><span>{label}</span>{label === 'Safety' && <span className="nav-dot" />}</button>)}</nav>
+      <nav>{navItems.map(({ label, icon: Icon }) => <button type="button" key={label} title={sidebarCollapsed ? label : undefined} aria-label={label} className={`nav-link ${page === label ? 'active' : ''}`} onClick={() => { setPage(label); setMobileMenu(false); }}><Icon size={18} /><span className="nav-link-label">{label}</span>{label === 'Safety' && <span className="nav-dot" />}</button>)}</nav>
     </aside>
     {mobileMenu && <button type="button" className="sidebar-backdrop" aria-label="Close menu" onClick={() => setMobileMenu(false)} />}
     <div className="main-column">
