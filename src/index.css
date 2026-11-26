@@ -564,3 +564,66 @@ html.dark .app-shell.sidebar-collapsed .sidebar .nav-link.active { color: #b7d0e
   html.dark .app-shell.sidebar-collapsed .sidebar .nav-link.active { border-color: rgba(154,170,189,.15); background: rgba(23,35,51,.88); box-shadow: 0 7px 18px rgba(0,0,0,.22), inset 0 1px 0 rgba(232,238,245,.05); }
 }
 @media(prefers-reduced-motion:reduce) { .app-shell .topbar,.app-shell .sidebar,.app-shell .main-column,.sidebar .nav-link,.nav-link-label { transition: none; } }
+
+/* Give the date and shift status distinct, breathable hierarchy. */
+.heading-date { display: grid; gap: 10px; width: 278px; min-width: 278px; padding: 16px 18px; border: 1px solid rgba(46,94,153,.14); border-radius: 18px; background: rgba(255,255,255,.48); box-shadow: 0 10px 28px rgba(13,36,64,.055), inset 0 1px 0 rgba(255,255,255,.7); text-align: left; backdrop-filter: blur(16px) saturate(145%); -webkit-backdrop-filter: blur(16px) saturate(145%); }
+.date-card-heading { display: flex; align-items: center; gap: 9px; }
+.date-card-icon { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid rgba(123,164,208,.22); border-radius: 10px; background: rgba(123,164,208,.13); color: #2e5e99; }
+.heading-date .shift-date-label { margin: 0; color: var(--muted); font-size: 9px; letter-spacing: 1.15px; }
+.heading-date .shift-date-value { display: block; padding-left: 39px; color: var(--ink); font-size: 15px; font-weight: 700; line-height: 1.25; }
+.heading-date .heading-shift { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 0; padding: 10px 0 0; border-top: 1px solid rgba(46,94,153,.13); }
+.heading-date .heading-shift > .shift-status { display: inline-flex; align-items: center; gap: 7px; text-align: left; }
+.shift-status { display: inline-flex; align-items: center; gap: 7px; color: var(--ink); font-size: 10px; font-weight: 700; white-space: nowrap; }
+.shift-status .live-dot { flex: 0 0 7px; }
+.shift-hours { padding: 5px 8px; border: 1px solid rgba(123,164,208,.18); border-radius: 999px; background: rgba(123,164,208,.1); color: var(--muted); font-size: 9px; white-space: nowrap; }
+html.dark .heading-date { border-color: rgba(154,170,189,.14); background: rgba(23,35,51,.55); box-shadow: 0 10px 28px rgba(0,0,0,.15), inset 0 1px 0 rgba(232,238,245,.04); }
+html.dark .date-card-icon { border-color: rgba(123,164,208,.2); background: rgba(123,164,208,.12); color: #b7d0e9; }
+html.dark .heading-date .heading-shift { border-color: rgba(154,170,189,.14); }
+html.dark .shift-status { color: #E8EEF5; }
+html.dark .shift-hours { border-color: rgba(123,164,208,.18); background: rgba(123,164,208,.1); color: #b7d0e9; }
+@media(max-width:720px) {
+  .page-heading { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .heading-date { width: min(100%, 380px); min-width: 0; max-width: none; padding: 14px 16px; }
+  .heading-date .shift-date-value { font-size: 14px; }
+}
+
+/* Keep the rail transparent; only the individual navigation pills carry glass. */
+.app-shell .sidebar,html.dark .app-shell .sidebar { background: transparent; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.app-shell:not(.sidebar-collapsed) .sidebar .nav-link,
+.app-shell:not(.sidebar-collapsed) .sidebar .nav-link.active { border-color: rgba(255,255,255,.5); border-radius: 999px; background: rgba(255,255,255,.2); box-shadow: 0 5px 16px rgba(13,36,64,.035), inset 0 1px 0 rgba(255,255,255,.5); backdrop-filter: blur(14px) saturate(145%); -webkit-backdrop-filter: blur(14px) saturate(145%); }
+.app-shell:not(.sidebar-collapsed) .sidebar .nav-link.active { background: rgba(123,164,208,.15); border-color: rgba(123,164,208,.3); }
+.app-shell.sidebar-collapsed .sidebar .nav-link,
+.app-shell.sidebar-collapsed .sidebar .nav-link.active { width: 48px; height: 48px; min-height: 48px; margin-left: 0; margin-right: auto; padding: 0; justify-content: center; gap: 0; border: 1px solid rgba(255,255,255,.62); border-radius: 50%; background: rgba(255,255,255,.34); box-shadow: 0 6px 18px rgba(13,36,64,.065), inset 0 1px 0 rgba(255,255,255,.72); backdrop-filter: blur(16px) saturate(155%); -webkit-backdrop-filter: blur(16px) saturate(155%); }
+.app-shell.sidebar-collapsed .sidebar .nav-link.active { border-color: rgba(123,164,208,.56); background: rgba(123,164,208,.26); color: #2e5e99; }
+.app-shell.sidebar-collapsed .sidebar .nav-link:hover,
+.app-shell.sidebar-collapsed .sidebar .nav-link:focus-visible,
+.app-shell.sidebar-collapsed .sidebar .nav-link.active:hover,
+.app-shell.sidebar-collapsed .sidebar .nav-link.active:focus-visible { width: 190px; height: 48px; padding: 0 14px; justify-content: flex-start; gap: 12px; border-radius: 999px; border-color: rgba(123,164,208,.55); background: rgba(255,255,255,.72); box-shadow: 0 14px 30px rgba(13,36,64,.17), inset 0 1px 0 rgba(255,255,255,.9); transform: translate(8px,-2px); }
+.app-shell.sidebar-collapsed .sidebar .nav-link:hover .nav-link-label,
+.app-shell.sidebar-collapsed .sidebar .nav-link:focus-visible .nav-link-label { max-width: 140px; opacity: 1; transform: translateX(0); }
+html.dark .app-shell:not(.sidebar-collapsed) .sidebar .nav-link,
+html.dark .app-shell:not(.sidebar-collapsed) .sidebar .nav-link.active { border-color: rgba(154,170,189,.13); background: rgba(23,35,51,.24); box-shadow: 0 5px 16px rgba(0,0,0,.08), inset 0 1px 0 rgba(232,238,245,.035); }
+html.dark .app-shell:not(.sidebar-collapsed) .sidebar .nav-link.active { border-color: rgba(123,164,208,.3); background: rgba(32,47,66,.58); }
+html.dark .app-shell.sidebar-collapsed .sidebar .nav-link,
+html.dark .app-shell.sidebar-collapsed .sidebar .nav-link.active { border-color: rgba(154,170,189,.22); background: rgba(23,35,51,.62); box-shadow: 0 7px 20px rgba(0,0,0,.2), inset 0 1px 0 rgba(232,238,245,.07); }
+html.dark .app-shell.sidebar-collapsed .sidebar .nav-link.active { border-color: rgba(123,164,208,.55); background: rgba(32,47,66,.9); color: #b7d0e9; }
+html.dark .app-shell.sidebar-collapsed .sidebar .nav-link:hover,
+html.dark .app-shell.sidebar-collapsed .sidebar .nav-link:focus-visible,
+html.dark .app-shell.sidebar-collapsed .sidebar .nav-link.active:hover,
+html.dark .app-shell.sidebar-collapsed .sidebar .nav-link.active:focus-visible { border-color: rgba(123,164,208,.6); background: rgba(23,35,51,.94); box-shadow: 0 15px 30px rgba(0,0,0,.42), inset 0 1px 0 rgba(232,238,245,.1); }
+.sidebar-collapse-button { opacity: 0; visibility: visible; }
+.sidebar-collapse-button::before { content: ''; position: absolute; inset: -9px; }
+.sidebar-collapse-button:hover,.sidebar-collapse-button:focus-visible { opacity: 1; }
+@media(hover:none) { .sidebar-collapse-button { opacity: 1; } }
+@media(max-width:720px) {
+  .app-shell:not(.sidebar-collapsed) .sidebar .nav-link,
+  .app-shell:not(.sidebar-collapsed) .sidebar .nav-link.active,
+  .app-shell.sidebar-collapsed .sidebar .nav-link,
+  .app-shell.sidebar-collapsed .sidebar .nav-link.active { border-radius: 16px; }
+  .app-shell.sidebar-collapsed .sidebar .nav-link,
+  .app-shell.sidebar-collapsed .sidebar .nav-link.active { width: 100%; height: auto; min-height: 50px; justify-content: flex-start; gap: 12px; padding: 10px 12px; }
+  .app-shell.sidebar-collapsed .sidebar .nav-link:hover,
+  .app-shell.sidebar-collapsed .sidebar .nav-link:focus-visible,
+  .app-shell.sidebar-collapsed .sidebar .nav-link.active:hover,
+  .app-shell.sidebar-collapsed .sidebar .nav-link.active:focus-visible { width: 100%; height: auto; padding: 10px 12px; transform: none; }
+}
