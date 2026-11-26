@@ -677,3 +677,64 @@ html.dark .app-shell :is(.crew-card,.machine-card,.matrix-wrap,.overview-stat,.o
   .app-shell .sidebar,.app-shell .main-column,.app-shell .sidebar .nav-link,.app-shell .nav-link-label,.sidebar-collapse-button,.profile-dropdown,.profile-pill,.overview-shift-card,.app-shell button,.app-shell :is(.crew-card,.machine-card,.matrix-wrap,.overview-stat,.overview-panel,.module-card,.module-panel) { transition-duration: .01ms !important; transition-timing-function: linear !important; }
   .app-shell :is(.crew-card,.machine-card,.matrix-wrap,.overview-stat,.overview-panel,.module-card,.module-panel):hover { transform: none; }
 }
+
+/* Compact rail, responsive page reflow, and quiet edge control. */
+.app-shell { --rail-width: 246px; }
+.app-shell.sidebar-collapsed { --rail-width: 70px; }
+.app-shell .sidebar { width: var(--rail-width); padding-left: 11px; padding-right: 11px; }
+.app-shell.sidebar-collapsed .sidebar { width: var(--rail-width); padding-left: 11px; padding-right: 11px; }
+.app-shell:not(.sidebar-collapsed) .main-column,
+.app-shell.sidebar-collapsed .main-column { width: calc(100% - var(--rail-width)); margin-left: var(--rail-width); transition: width .62s var(--ui-spring), margin-left .62s var(--ui-spring); }
+.sidebar-collapse-button { left: calc(var(--rail-width) - 14px); top: calc(50% + 32px); width: 28px; height: 28px; border: 1px solid rgba(46,94,153,.22); border-radius: 50%; background: rgba(255,255,255,.78); color: #607b9c; box-shadow: 0 5px 15px rgba(13,36,64,.12), inset 0 1px 0 rgba(255,255,255,.9); opacity: 0; pointer-events: auto; transition: opacity .24s ease, color .3s var(--ui-spring), background .3s var(--ui-spring), border-color .3s var(--ui-spring); }
+.app-shell.sidebar-collapsed .sidebar-collapse-button { left: calc(var(--rail-width) - 14px); }
+.sidebar:hover + .sidebar-collapse-button,.sidebar-collapse-button:hover,.sidebar-collapse-button:focus-visible { opacity: 1; }
+.sidebar-collapse-button:hover,.sidebar-collapse-button:focus-visible { border-color: #7ba4d0; background: rgba(255,255,255,.96); color: #2e5e99; }
+.sidebar-collapse-button::before { content: ''; position: absolute; inset: -9px; }
+html.dark .sidebar-collapse-button { border-color: rgba(154,170,189,.22); background: rgba(23,35,51,.86); color: #9AAABD; box-shadow: 0 6px 17px rgba(0,0,0,.27), inset 0 1px 0 rgba(232,238,245,.08); }
+html.dark .sidebar-collapse-button:hover,html.dark .sidebar-collapse-button:focus-visible { border-color: #7ba4d0; background: #172333; color: #b7d0e9; }
+@media(hover:none) { .sidebar-collapse-button { opacity: 1; } }
+
+/* Rebuild the shift date area as two aligned glass cards. */
+.heading-date-area { display: flex; align-items: stretch; gap: 10px; flex: 0 0 auto; }
+.date-info-card,.shift-info-card { display: flex; align-items: center; min-height: 82px; border: 1px solid rgba(46,94,153,.14); border-radius: 18px; background: rgba(255,255,255,.48); box-shadow: 0 10px 28px rgba(13,36,64,.055), inset 0 1px 0 rgba(255,255,255,.7); backdrop-filter: blur(16px) saturate(145%); -webkit-backdrop-filter: blur(16px) saturate(145%); }
+.date-info-card { width: 260px; gap: 12px; padding: 14px 16px; }
+.date-info-card .date-card-icon { width: 38px; height: 38px; flex: 0 0 38px; border-radius: 13px; }
+.date-info-copy { display: grid; gap: 6px; min-width: 0; }
+.date-info-copy small { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: 1.15px; }
+.date-info-copy b { color: var(--ink); font: 700 13px/1.25 Manrope,sans-serif; white-space: nowrap; }
+.shift-info-card { display: grid; grid-template-columns: 10px 1fr; grid-template-rows: auto auto; align-content: center; column-gap: 10px; row-gap: 8px; width: 190px; padding: 13px 14px; }
+.shift-info-indicator { grid-column: 1; grid-row: 1; display: grid; place-items: center; }
+.shift-info-copy { grid-column: 2; grid-row: 1; display: grid; gap: 3px; }
+.shift-info-copy b { color: var(--ink); font-size: 11px; }
+.shift-info-copy small { color: var(--muted); font-size: 9px; }
+.shift-info-card .shift-hours { grid-column: 2; grid-row: 2; justify-self: start; margin: 0; padding: 4px 8px; }
+html.dark .date-info-card,html.dark .shift-info-card { border-color: rgba(154,170,189,.14); background: rgba(23,35,51,.55); box-shadow: 0 10px 28px rgba(0,0,0,.15), inset 0 1px 0 rgba(232,238,245,.04); }
+html.dark .date-info-card .date-card-icon { border-color: rgba(123,164,208,.2); background: rgba(123,164,208,.12); color: #b7d0e9; }
+html.dark .date-info-copy b,html.dark .shift-info-copy b { color: #E8EEF5; }
+@media(min-width:721px) and (max-width:1050px) { .app-shell:not(.sidebar-collapsed) { --rail-width: 218px; } }
+@media(max-width:1100px) { .page-heading { align-items: flex-start; flex-wrap: wrap; gap: 14px; } }
+@media(max-width:720px) {
+  .app-shell { --rail-width: 0px; }
+  .app-shell.sidebar-collapsed { --rail-width: 0px; }
+  .app-shell:not(.sidebar-collapsed) .main-column,.app-shell.sidebar-collapsed .main-column { width: 100%; margin-left: 0; }
+  .app-shell .sidebar { width: 260px; padding: 24px 16px 16px; }
+  .app-shell.sidebar-collapsed .sidebar { width: 260px; padding: 24px 16px 16px; }
+  .heading-date-area { width: min(100%, 420px); flex-direction: column; }
+  .date-info-card,.shift-info-card { width: 100%; }
+  .date-info-copy b { white-space: normal; }
+}
+
+/* Circular controls and a slower, shared spring for interface feedback. */
+.topbar-actions .icon-button { display: grid; place-items: center; width: 38px; height: 38px; padding: 0; border: 1px solid rgba(46,94,153,.18); border-radius: 50%; background: rgba(255,255,255,.42); color: #607b9c; box-shadow: 0 6px 16px rgba(13,36,64,.055), inset 0 1px 0 rgba(255,255,255,.75); backdrop-filter: blur(14px) saturate(145%); -webkit-backdrop-filter: blur(14px) saturate(145%); transition: transform .38s var(--ui-spring), background .38s var(--ui-spring), border-color .38s var(--ui-spring), box-shadow .38s var(--ui-spring), color .38s var(--ui-spring); }
+.topbar-actions .icon-button:hover,.topbar-actions .icon-button:focus-visible { transform: translateY(-2px); border-color: rgba(123,164,208,.52); background: rgba(255,255,255,.8); box-shadow: 0 10px 22px rgba(13,36,64,.12), inset 0 1px 0 #fff; }
+.topbar-actions .notification-button i { right: 4px; top: 4px; }
+html.dark .topbar-actions .icon-button { border-color: rgba(154,170,189,.18); background: rgba(23,35,51,.62); color: #b7d0e9; box-shadow: 0 7px 19px rgba(0,0,0,.2), inset 0 1px 0 rgba(232,238,245,.06); }
+html.dark .topbar-actions .icon-button:hover,html.dark .topbar-actions .icon-button:focus-visible { border-color: rgba(123,164,208,.52); background: rgba(32,47,66,.9); box-shadow: 0 11px 24px rgba(0,0,0,.3), inset 0 1px 0 rgba(232,238,245,.08); }
+:root { --ui-spring: cubic-bezier(.2,1.2,.32,1); }
+.app-shell .sidebar,.app-shell .main-column { transition-duration: .62s; transition-timing-function: var(--ui-spring); }
+.app-shell .sidebar .nav-link { transition-duration: .58s; transition-timing-function: var(--ui-spring); }
+.app-shell .nav-link-label { transition-duration: .46s; transition-timing-function: var(--ui-spring); }
+.app-shell button,.app-shell :is(.profile-dropdown,.profile-pill,.overview-shift-card,.crew-card,.machine-card,.matrix-wrap,.overview-stat,.overview-panel,.module-card,.module-panel) { transition-duration: .42s; transition-timing-function: var(--ui-spring); }
+@media(prefers-reduced-motion:reduce) {
+  .app-shell .sidebar,.app-shell .main-column,.app-shell .sidebar .nav-link,.app-shell .nav-link-label,.sidebar-collapse-button,.profile-dropdown,.profile-pill,.overview-shift-card,.app-shell button,.app-shell :is(.crew-card,.machine-card,.matrix-wrap,.overview-stat,.overview-panel,.module-card,.module-panel) { transition-duration: .01ms !important; transition-timing-function: linear !important; }
+}
