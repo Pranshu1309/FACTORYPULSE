@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { Activity, AlertTriangle, ArrowDownRight, Bell, Check, ChevronDown, CircleHelp, ClipboardList, Factory, Gauge, LayoutDashboard, Menu, Settings, ShieldCheck, Sparkles, Users, Wrench, Moon, Sun } from 'lucide-react';
+import { Activity, AlertTriangle, ArrowDownRight, Bell, Check, ChevronDown, CircleHelp, ClipboardList, Factory, Gauge, LayoutDashboard, Menu, Settings, ShieldCheck, Sparkles, Users, UserRound, Wrench, Moon, Sun } from 'lucide-react';
 import { useFactoryData } from './context/FactoryContext.jsx';
 
 export const initialData = {
@@ -41,6 +41,7 @@ export default function App() {
   const [toast, setToast] = useState('');
   const [mobileMenu, setMobileMenu] = useState(false);
   const [page, setPage] = useState('Shift Planner');
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
 
   function toggleDarkMode() {
@@ -154,11 +155,11 @@ export default function App() {
       <div className="plant-select"><span className="plant-icon"><Factory size={18} /></span><span><b>Rajkot Works</b><small>Gujarat, India</small></span><ChevronDown size={15} /></div>
       <div className="nav-label">WORKSPACE</div>
       <nav>{navItems.map(({ label, icon: Icon }) => <button type="button" key={label} className={`nav-link ${page === label ? 'active' : ''}`} onClick={() => { setPage(label); setMobileMenu(false); }}><Icon size={18} /><span>{label}</span>{label === 'Safety' && <span className="nav-dot" />}</button>)}</nav>
-      <div className="sidebar-bottom"><div className="shift-chip"><span className="live-dot" /><span>Morning shift in progress</span></div><button type="button" className={`nav-link ${page === 'Settings' ? 'active' : ''}`} onClick={() => { setPage('Settings'); setMobileMenu(false); }}><Settings size={18} /><span>Settings</span></button><div className="user-profile"><div className="avatar avatar-purple">AS</div><span><b>Admin Supervisor</b><small>Plant manager</small></span><ChevronDown size={15} /></div></div>
+      <div className="sidebar-bottom"><div className="shift-chip"><span className="live-dot" /><span>Morning shift in progress</span></div></div>
     </aside>
     {mobileMenu && <button type="button" className="sidebar-backdrop" aria-label="Close menu" onClick={() => setMobileMenu(false)} />}
     <div className="main-column">
-      <header className="topbar"><button className="menu-button" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Open menu"><Menu size={21} /></button><div className="breadcrumb"><span>Workspace</span><span className="crumb-slash">/</span><b>{page}</b></div><div className="topbar-actions"><span className="date-label">Tue, 25 Nov 2026</span><button className="icon-button notification-button" aria-label="Notifications"><Bell size={19} /><i /></button><button className={`icon-button theme-toggle ${darkMode ? 'dark' : ''}`} onClick={toggleDarkMode} aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>{darkMode ? <Sun size={19} /> : <Moon size={19} />}</button><div className="avatar avatar-green">AS</div></div></header>
+      <header className="topbar"><button className="menu-button" onClick={() => setMobileMenu(!mobileMenu)} aria-label="Open menu"><Menu size={21} /></button><div className="breadcrumb"><span>Workspace</span><span className="crumb-slash">/</span><b>{page}</b></div><div className="topbar-actions"><span className="date-label">Tue, 25 Nov 2026</span><button className="icon-button notification-button" aria-label="Notifications"><Bell size={19} /><i /></button><button className={`icon-button theme-toggle ${darkMode ? 'dark' : ''}`} onClick={toggleDarkMode} aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>{darkMode ? <Sun size={19} /> : <Moon size={19} />}</button><div className={`profile-menu ${profileMenuOpen ? 'is-open' : ''}`} onMouseEnter={() => setProfileMenuOpen(true)} onMouseLeave={() => setProfileMenuOpen(false)} onKeyDown={(event) => { if (event.key === 'Escape') setProfileMenuOpen(false); }}><button type="button" className="profile-pill" aria-haspopup="menu" aria-expanded={profileMenuOpen} onClick={() => setProfileMenuOpen((open) => !open)}><div className="avatar avatar-green">AS</div><span className="profile-pill-copy"><b>Admin Supervisor</b><small>Plant manager</small></span><ChevronDown size={15} /></button><div className="profile-dropdown" role="menu"><div className="profile-dropdown-heading"><div className="avatar avatar-green">AS</div><span><b>Admin Supervisor</b><small>Plant manager · Rajkot Works</small></span></div><button type="button" role="menuitem" className={page === 'Account' ? 'selected' : ''} onClick={() => { setPage('Account'); setProfileMenuOpen(false); }}><UserRound size={16} />My account</button><button type="button" role="menuitem" className={page === 'Settings' ? 'selected' : ''} onClick={() => { setPage('Settings'); setProfileMenuOpen(false); }}><Settings size={16} />Settings</button></div></div></div></header>
       <main className="content"><div className="page-heading"><div><div className="eyebrow"><span className="live-dot" /> LIVE OPERATIONS <span className="eyebrow-divider">·</span> RAJKOT WORKS</div><h1>{page}</h1><p>{page === 'Shift Planner' ? 'Plan your crew. Keep every machine moving.' : `Rajkot Works · ${page}`}</p></div><div className="heading-date"><span>SHIFT DATE</span><b>Tuesday, 25 November 2026</b></div></div>
 
         {toast && <div className="toast"><Check size={17} />{toast}<button onClick={() => setToast('')}>Dismiss</button></div>}
@@ -195,6 +196,8 @@ export default function App() {
         {page === 'Maintenance' && <section className="module-panel"><div className="section-title"><div><h2>Machine maintenance</h2><span>Simulated next service dates</span></div></div>{data.machines.map((machine) => <div className="module-row" key={machine.id}><span><b>{machine.name}</b><small>{machine.code} · {machine.area}</small></span><span><small>Next service</small><b>{machine.nextMaintenance || 'Date not set'}</b></span><b className={`status-text ${machine.status}`}>{machine.status}</b></div>)}</section>}
 
         {page === 'Settings' && <section className="module-panel settings-panel"><h2>Settings</h2><div className="module-row"><span><b>Appearance</b><small>Choose light or dark display mode</small></span><button type="button" className="confirm-button" onClick={toggleDarkMode}>{darkMode ? 'Switch to light mode' : 'Switch to dark mode'}</button></div><p>FactoryPulse uses simulated demo data stored on this device.</p></section>}
+
+        {page === 'Account' && <section className="module-panel account-panel"><h2>My account</h2><div className="account-identity"><div className="avatar avatar-green">AS</div><span><b>Admin Supervisor</b><small>Plant manager</small></span></div><div className="module-row"><span><b>Workspace</b><small>Rajkot Works · Gujarat, India</small></span></div></section>}
 
         <footer className="page-footer"><span>FactoryPulse <i>·</i> Shop floor overview</span><span>All data is simulated for demo purposes</span></footer>
       </main>
