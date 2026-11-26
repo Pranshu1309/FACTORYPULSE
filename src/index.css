@@ -685,8 +685,8 @@ html.dark .app-shell :is(.crew-card,.machine-card,.matrix-wrap,.overview-stat,.o
 .app-shell.sidebar-collapsed .sidebar { width: var(--rail-width); padding-left: 11px; padding-right: 11px; }
 .app-shell:not(.sidebar-collapsed) .main-column,
 .app-shell.sidebar-collapsed .main-column { width: calc(100% - var(--rail-width)); margin-left: var(--rail-width); transition: width .62s var(--ui-spring), margin-left .62s var(--ui-spring); }
-.sidebar-collapse-button { left: calc(var(--rail-width) - 14px); top: calc(50% + 32px); width: 28px; height: 28px; border: 1px solid rgba(46,94,153,.22); border-radius: 50%; background: rgba(255,255,255,.78); color: #607b9c; box-shadow: 0 5px 15px rgba(13,36,64,.12), inset 0 1px 0 rgba(255,255,255,.9); opacity: 0; pointer-events: auto; transition: opacity .24s ease, color .3s var(--ui-spring), background .3s var(--ui-spring), border-color .3s var(--ui-spring); }
-.app-shell.sidebar-collapsed .sidebar-collapse-button { left: calc(var(--rail-width) - 14px); }
+.sidebar-collapse-button { left: calc(var(--rail-width) - 4px); top: calc(50% + 32px); width: 28px; height: 28px; border: 1px solid rgba(46,94,153,.22); border-radius: 50%; background: rgba(255,255,255,.78); color: #607b9c; box-shadow: 0 5px 15px rgba(13,36,64,.12), inset 0 1px 0 rgba(255,255,255,.9); opacity: 0; pointer-events: auto; transition: opacity .24s ease, color .3s var(--ui-spring), background .3s var(--ui-spring), border-color .3s var(--ui-spring); }
+.app-shell.sidebar-collapsed .sidebar-collapse-button { left: calc(var(--rail-width) - 4px); }
 .sidebar:hover + .sidebar-collapse-button,.sidebar-collapse-button:hover,.sidebar-collapse-button:focus-visible { opacity: 1; }
 .sidebar-collapse-button:hover,.sidebar-collapse-button:focus-visible { border-color: #7ba4d0; background: rgba(255,255,255,.96); color: #2e5e99; }
 .sidebar-collapse-button::before { content: ''; position: absolute; inset: -9px; }
@@ -735,6 +735,10 @@ html.dark .topbar-actions .icon-button:hover,html.dark .topbar-actions .icon-but
 .app-shell .sidebar .nav-link { transition-duration: .58s; transition-timing-function: var(--ui-spring); }
 .app-shell .nav-link-label { transition-duration: .46s; transition-timing-function: var(--ui-spring); }
 .app-shell button,.app-shell :is(.profile-dropdown,.profile-pill,.overview-shift-card,.crew-card,.machine-card,.matrix-wrap,.overview-stat,.overview-panel,.module-card,.module-panel) { transition-duration: .42s; transition-timing-function: var(--ui-spring); }
+.app-shell .content { transition: width .62s var(--ui-spring), margin .62s var(--ui-spring), padding .5s var(--ui-spring); }
+.app-shell.sidebar-collapsed .content { width: min(1600px,100%); max-width: 1600px; margin-left: 0; margin-right: auto; padding-left: 32px; padding-right: 38px; }
+@media(max-width:1050px) { .app-shell.sidebar-collapsed .content { padding-left: 26px; padding-right: 26px; } }
+@media(max-width:720px) { .app-shell.sidebar-collapsed .content { width: 100%; max-width: none; margin: 0 auto; padding: 24px 16px 21px; } }
 @media(prefers-reduced-motion:reduce) {
-  .app-shell .sidebar,.app-shell .main-column,.app-shell .sidebar .nav-link,.app-shell .nav-link-label,.sidebar-collapse-button,.profile-dropdown,.profile-pill,.overview-shift-card,.app-shell button,.app-shell :is(.crew-card,.machine-card,.matrix-wrap,.overview-stat,.overview-panel,.module-card,.module-panel) { transition-duration: .01ms !important; transition-timing-function: linear !important; }
+  .app-shell .sidebar,.app-shell .main-column,.app-shell .content,.app-shell .sidebar .nav-link,.app-shell .nav-link-label,.sidebar-collapse-button,.profile-dropdown,.profile-pill,.overview-shift-card,.app-shell button,.app-shell :is(.crew-card,.machine-card,.matrix-wrap,.overview-stat,.overview-panel,.module-card,.module-panel) { transition-duration: .01ms !important; transition-timing-function: linear !important; }
 }
