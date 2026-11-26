@@ -168,7 +168,7 @@ export default function App() {
   return <div className={`app-shell ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
     <aside className={`sidebar ${mobileMenu ? 'mobile-open' : ''}`}>
       <div className="nav-label">WORKSPACE</div>
-      <nav>{navItems.map(({ label, icon: Icon }) => <button type="button" key={label} title={sidebarCollapsed ? label : undefined} aria-label={label} className={`nav-link ${page === label ? 'active' : ''}`} onClick={() => { setPage(label); setMobileMenu(false); }}><Icon size={18} /><span className="nav-link-label">{label}</span>{label === 'Safety' && <span className="nav-dot" />}</button>)}</nav>
+      <nav>{navItems.map(({ label, icon: Icon }) => <button type="button" key={label} aria-label={label} className={`nav-link ${page === label ? 'active' : ''}`} onClick={() => { setPage(label); setMobileMenu(false); }}><Icon size={18} /><span className="nav-link-label">{label}</span>{label === 'Safety' && <span className="nav-dot" />}</button>)}</nav>
     </aside>
     <button type="button" className="sidebar-collapse-button" onClick={toggleSidebar} aria-label={sidebarCollapsed ? 'Expand navigation' : 'Collapse navigation'} aria-expanded={!sidebarCollapsed} title={sidebarCollapsed ? 'Expand navigation' : 'Collapse navigation'}>{sidebarCollapsed ? <ChevronRight size={17} /> : <ChevronLeft size={17} />}</button>
     {mobileMenu && <button type="button" className="sidebar-backdrop" aria-label="Close menu" onClick={() => setMobileMenu(false)} />}
