@@ -392,3 +392,27 @@ html.dark .overview-shift-card:hover,html.dark .overview-shift-card:focus-visibl
 @media(max-width:950px) { .overview-stat-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .overview-panel-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); } }
 @media(max-width:720px) { .overview-dashboard { gap: 12px; } .overview-stat-grid { gap: 8px; } .overview-stat { min-height: 132px; padding: 14px; } .overview-stat-value { font-size: 24px; } .overview-panel-grid { grid-template-columns: 1fr; gap: 10px; } .overview-panel { padding: 16px; } .overview-shift-card { flex-wrap: wrap; padding: 13px; } .overview-shift-link { margin-left: 48px; } }
 @media(prefers-reduced-motion:reduce) { .overview-shift-card { transition: none; } }
+
+/* Put the current shift beside a clearer, more prominent date. */
+.heading-date { min-width: 205px; padding: 2px 0 1px; }
+.heading-date .shift-date-label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 10px; letter-spacing: 1.35px; }
+.heading-date .shift-date-value { display: block; color: var(--ink); font-size: 15px; font-weight: 700; }
+.heading-shift { display: flex; align-items: center; justify-content: flex-end; gap: 9px; margin-top: 10px; }
+.heading-shift .live-dot { flex: 0 0 7px; }
+.heading-shift > span { display: grid; gap: 3px; text-align: right; }
+.heading-shift b { color: var(--ink); font-size: 11px; font-weight: 700; }
+.heading-shift small { color: var(--muted); font-size: 10px; }
+html.dark .heading-shift b { color: #E8EEF5; }
+@media(max-width:720px) {
+  .page-heading { gap: 12px; }
+  .heading-date { min-width: 0; padding-top: 4px; }
+  .heading-date .shift-date-label { margin-bottom: 4px; font-size: 8px; }
+  .heading-date .shift-date-value { font-size: 11px; }
+  .heading-shift { gap: 7px; margin-top: 7px; }
+  .heading-shift b { font-size: 9px; }
+  .heading-shift small { font-size: 8px; }
+}
+@media(max-width:390px) {
+  .heading-date { max-width: 48%; }
+  .heading-date .shift-date-value { font-size: 10px; }
+}
