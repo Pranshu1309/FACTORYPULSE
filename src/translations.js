@@ -39,3 +39,4 @@ export const translations = {
     dashboard:'डॅशबोर्ड',shiftCrew:'शिफ्ट पथक',machineStatus:'यंत्र स्थिती',productionToday:'आजचे उत्पादन',alertsRecent:'अलीकडील सूचना',temperature:'तापमान',faults30Days:'३० दिवसांतील बिघाड',resetConfirm:'डेमो डेटा आणि शिफ्ट घड्याळ रीसेट करायचे?'
   }
 };
+
