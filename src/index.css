@@ -730,3 +730,55 @@ html.dark .mobile-tabs button.tab-active { color: #60a5fa; }
 html.dark .mobile-tabs button.tab-active:before { background: linear-gradient(90deg,#2563eb,#60a5fa); }
 html.dark .demo-toggle { background: #243044; color: #f8fafc; }
 
+.accent-picker { display: grid; gap: 11px; padding: 14px 0; border-top: 1px solid var(--line); }
+.accent-picker>div:first-child { display: grid; gap: 4px; }
+.accent-picker b { color: var(--ink); font-size: 12px; }
+.accent-picker small { color: var(--muted); font-size: 10px; }
+.accent-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.accent-option { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); font-size: 11px; font-weight: 600; }
+.accent-option[aria-pressed="true"] { border-color: var(--ui-accent); background: var(--ui-accent-soft); box-shadow: 0 0 0 2px color-mix(in srgb,var(--ui-accent) 12%,transparent); }
+.accent-option>svg { color: var(--ui-accent-strong); }
+.accent-swatch-dot { width: 19px; height: 19px; flex-shrink: 0; border: 1px solid rgba(17,24,39,.2); border-radius: 50%; }
+
+:root { --ui-accent:#2563eb; --ui-accent-strong:#1d4ed8; --ui-accent-soft:#eff6ff; --ui-gradient:linear-gradient(100deg,#2563eb,#1d4ed8); --ui-accent-contrast:#ffffff; }
+:root[data-accent="blue"] { --ui-accent:#2563eb; --ui-accent-strong:#1d4ed8; --ui-accent-soft:#eff6ff; --ui-gradient:linear-gradient(100deg,#2563eb,#1d4ed8); --ui-accent-contrast:#ffffff; }
+:root[data-accent="gray"] { --ui-accent:#64748b; --ui-accent-strong:#475569; --ui-accent-soft:#f1f5f9; --ui-gradient:linear-gradient(100deg,#64748b,#475569); --ui-accent-contrast:#ffffff; }
+:root[data-accent="brown"] { --ui-accent:#8b6b4b; --ui-accent-strong:#6f5136; --ui-accent-soft:#f5f0e9; --ui-gradient:linear-gradient(100deg,#8b6b4b,#6f5136); --ui-accent-contrast:#ffffff; }
+:root[data-accent="white"] { --ui-accent:#ffffff; --ui-accent-strong:#64748b; --ui-accent-soft:#f1f5f9; --ui-gradient:linear-gradient(100deg,#f8fafc,#e2e8f0); --ui-accent-contrast:#111827; }
+:root[data-accent="black"] { --ui-accent:#111827; --ui-accent-strong:#000000; --ui-accent-soft:#f3f4f6; --ui-gradient:linear-gradient(100deg,#111827,#374151); --ui-accent-contrast:#ffffff; }
+:root[data-accent="light-green"] { --ui-accent:#86efac; --ui-accent-strong:#16a34a; --ui-accent-soft:#f0fdf4; --ui-gradient:linear-gradient(100deg,#86efac,#4ade80); --ui-accent-contrast:#14532d; }
+:root:not(.dark) .brand-mark { background:var(--ui-gradient); color:var(--ui-accent-contrast); }
+:root:not(.dark) .nav-link.active { background:var(--ui-accent-soft); color:var(--ui-accent-strong); }
+:root:not(.dark) .nav-link.active:before { background:var(--ui-gradient); }
+:root:not(.dark) .title-icon { background:var(--ui-accent-soft); color:var(--ui-accent-strong); }
+:root:not(.dark) .heading-clock { background:var(--ui-accent-soft); border-color:color-mix(in srgb,var(--ui-accent) 24%,white); }
+:root:not(.dark) .heading-clock b,
+:root:not(.dark) .text-link { color:var(--ui-accent-strong); }
+:root:not(.dark) .progress-track i,
+:root:not(.dark) .clock-progress i,
+:root:not(.dark) .mobile-tabs button.tab-active:before { background:var(--ui-gradient); }
+:root:not(.dark) .small-action,
+:root:not(.dark) .speed-button { background:var(--ui-accent-soft); border-color:color-mix(in srgb,var(--ui-accent) 20%,white); color:var(--ui-accent-strong); }
+:root:not(.dark) .start-button,
+:root:not(.dark) .suggest-button { background:var(--ui-gradient); color:var(--ui-accent-contrast); }
+:root:not(.dark) .confirm-button { border-color:color-mix(in srgb,var(--ui-accent) 35%,white); color:var(--ui-accent-strong); }
+:root:not(.dark) .mobile-tabs button.tab-active { color:var(--ui-accent-strong); }
+html.dark .brand-mark { background:var(--ui-gradient); color:var(--ui-accent-contrast); }
+html.dark .nav-link:hover,
+html.dark .nav-link.active,
+html.dark .shift-toggle button.selected,
+html.dark .small-action,
+html.dark .speed-button { background:color-mix(in srgb,var(--ui-accent) 20%,#17191f); border-color:color-mix(in srgb,var(--ui-accent) 38%,#30343b); color:color-mix(in srgb,var(--ui-accent) 55%,white); }
+html.dark .nav-link.active:before,
+html.dark .progress-track i,
+html.dark .clock-progress i,
+html.dark .mobile-tabs button.tab-active:before { background:var(--ui-gradient); }
+html.dark .title-icon,
+html.dark .heading-clock { background:color-mix(in srgb,var(--ui-accent) 18%,#17191f); border-color:color-mix(in srgb,var(--ui-accent) 30%,#30343b); color:color-mix(in srgb,var(--ui-accent) 60%,white); }
+html.dark .heading-clock b,
+html.dark .text-link,
+html.dark .mobile-tabs button.tab-active { color:color-mix(in srgb,var(--ui-accent) 60%,white); }
+html.dark .start-button,
+html.dark .suggest-button { background:var(--ui-gradient); color:var(--ui-accent-contrast); }
+html.dark .confirm-button { border-color:color-mix(in srgb,var(--ui-accent) 35%,#30343b); color:color-mix(in srgb,var(--ui-accent) 60%,white); }
+
