@@ -108,6 +108,8 @@ body { font-size: 15px; }
   .module-row { align-items: flex-start; }
 }
 
+
+
 @media(max-width:720px) {
   .sidebar { z-index: 11; max-height: 100dvh; }
   .sidebar-backdrop { display: block; position: fixed; inset: 0; z-index: 10; border: 0; background: #10221870; }
@@ -591,4 +593,140 @@ html.dark .text-link { color: #4ade80; }
   :root:not(.dark) .section-card,
   :root:not(.dark) .machine-card { border-radius: 14px; }
 }
+
+/* Requested blue, gray, brown, white, black and light-green palette. */
+:root:not(.dark) {
+  --ink: #111827;
+  --muted: #667085;
+  --line: #e4e7ec;
+  --paper: #ffffff;
+  --accent: #2563eb;
+  --accent-strong: #1d4ed8;
+  --warm-brown: #8b6b4b;
+  --light-green: #dcfce7;
+  background: #f3f6fb;
+}
+:root:not(.dark) body { background: linear-gradient(135deg,#f2f6fc 0%,#f8fafc 55%,#f2f7fb 100%); color: var(--ink); }
+:root:not(.dark) .brand-light { color: var(--warm-brown); }
+:root:not(.dark) .brand-mark { background: linear-gradient(140deg,#2563eb,#60a5fa); color: #fff; box-shadow: 0 7px 18px rgba(37,99,235,.18); }
+:root:not(.dark) .plant-icon { background: #dcfce7; color: #32734d; }
+:root:not(.dark) .nav-link:hover { background: #eff6ff; color: #1d4ed8; }
+:root:not(.dark) .nav-link.active { background: linear-gradient(100deg,#e8f0ff,#eff6ff); color: #1d4ed8; }
+:root:not(.dark) .nav-link.active:before { background: linear-gradient(180deg,#2563eb,#60a5fa); }
+:root:not(.dark) .heading-clock { background: linear-gradient(135deg,#eff6ff,#f8fafc); border-color: #dbeafe; }
+:root:not(.dark) .heading-clock b { color: #1d4ed8; }
+:root:not(.dark) .title-icon { background: #eff6ff; color: #2563eb; }
+:root:not(.dark) .progress-track i,
+:root:not(.dark) .clock-progress i { background: linear-gradient(90deg,#2563eb,#60a5fa); }
+:root:not(.dark) .shift-toggle button.selected { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+:root:not(.dark) .small-action,
+:root:not(.dark) .speed-button { background: #eff6ff; border-color: #dbeafe; color: #1d4ed8; }
+:root:not(.dark) .small-action:hover,
+:root:not(.dark) .speed-button:hover { background: #dbeafe; }
+:root:not(.dark) .start-button,
+:root:not(.dark) .suggest-button { background: linear-gradient(100deg,#2563eb,#1d4ed8); box-shadow: 0 5px 14px rgba(37,99,235,.16); }
+:root:not(.dark) .start-button:hover:not(:disabled),
+:root:not(.dark) .suggest-button:hover { background: linear-gradient(100deg,#1d4ed8,#1e40af); }
+:root:not(.dark) .confirm-button { background: #fff; border-color: #bfdbfe; color: #1d4ed8; }
+:root:not(.dark) .confirm-button:hover:not(:disabled) { background: #eff6ff; }
+:root:not(.dark) .text-link { color: #2563eb; }
+:root:not(.dark) .status-counts .good,
+:root:not(.dark) .status-pill.good,
+:root:not(.dark) .crew-count,
+:root:not(.dark) .skill-pill { background: #dcfce7; color: #276749; }
+:root:not(.dark) .demo-toggle { background: #243044; }
+:root:not(.dark) .mobile-tabs button.tab-active { color: #2563eb; }
+:root:not(.dark) .mobile-tabs button.tab-active:before { background: linear-gradient(90deg,#2563eb,#60a5fa); }
+
+html.dark {
+  --ink: #f8fafc;
+  --muted: #a1a7b0;
+  --line: #30343b;
+  --paper: #17191f;
+  --green: #a7f3d0;
+  --green-dark: #4ade80;
+  --accent: #60a5fa;
+  --accent-strong: #3b82f6;
+  --warm-brown: #b79a78;
+  background: #0d0f13;
+  color: #f8fafc;
+}
+html.dark body,
+html.dark .app-shell { background: #0d0f13; color: #f8fafc; }
+html.dark .sidebar,
+html.dark .topbar,
+html.dark .mobile-tabs,
+html.dark .simulation-toolbar { background: #15181e; border-color: #30343b; }
+html.dark .brand { color: #f8fafc; }
+html.dark .brand-light { color: #b79a78; }
+html.dark .brand-mark { background: linear-gradient(140deg,#2563eb,#60a5fa); color: #fff; }
+html.dark .plant-icon,
+html.dark .title-icon { background: #1d2b41; color: #93c5fd; }
+html.dark .plant-select,
+html.dark .dash-card,
+html.dark .section-card,
+html.dark .insight-card,
+html.dark .machine-card,
+html.dark .crew-card,
+html.dark .matrix-wrap,
+html.dark .module-card,
+html.dark .module-panel,
+html.dark .maintenance-card,
+html.dark .modal-card,
+html.dark .demo-panel { background: #17191f; border-color: #30343b; color: #f8fafc; box-shadow: 0 9px 28px rgba(0,0,0,.18); }
+html.dark .nav-link { color: #a1a7b0; }
+html.dark .nav-link:hover,
+html.dark .nav-link.active { background: #1d2b41; color: #93c5fd; }
+html.dark .nav-link.active:before { background: linear-gradient(180deg,#2563eb,#60a5fa); }
+html.dark .page-heading h1,
+html.dark .dash-card-title h2,
+html.dark .section-header h2,
+html.dark .section-title h2,
+html.dark .machine-info h3,
+html.dark .maintenance-heading h3,
+html.dark .metric-value,
+html.dark .output-summary strong { color: #f8fafc; }
+html.dark .nav-label,
+html.dark .breadcrumb,
+html.dark .eyebrow,
+html.dark .page-heading p,
+html.dark .dash-card>p,
+html.dark .compact-row,
+html.dark .machine-data,
+html.dark .module-row,
+html.dark .chart-row { color: #a1a7b0; }
+html.dark .heading-clock { background: #1d2b41; border-color: #30425c; }
+html.dark .heading-clock b,
+html.dark .text-link { color: #93c5fd; }
+html.dark .progress-track,
+html.dark .clock-progress { background: #30343b; }
+html.dark .progress-track i,
+html.dark .clock-progress i { background: linear-gradient(90deg,#2563eb,#60a5fa); }
+html.dark .shift-toggle button,
+html.dark .override-select select,
+html.dark .filter-select,
+html.dark .settings-row select { background: #17191f; border-color: #3a414b; color: #f8fafc; }
+html.dark .shift-toggle button.selected,
+html.dark .small-action,
+html.dark .speed-button { background: #1d2b41; border-color: #30425c; color: #93c5fd; }
+html.dark .start-button,
+html.dark .suggest-button { background: linear-gradient(100deg,#2563eb,#1d4ed8); color: #fff; }
+html.dark .confirm-button { background: #17191f; border-color: #30425c; color: #93c5fd; }
+html.dark .status-counts .good,
+html.dark .status-pill.good,
+html.dark .crew-count,
+html.dark .skill-pill { background: #1c352a; color: #a7f3d0; }
+html.dark .worker-row,
+html.dark .card-heading,
+html.dark .worker-table-row,
+html.dark .module-row,
+html.dark .production-item,
+html.dark .incident-row,
+html.dark .settings-row,
+html.dark .machine-operator,
+html.dark .service-history { border-color: #30343b; }
+html.dark .mobile-tabs button { color: #a1a7b0; }
+html.dark .mobile-tabs button.tab-active { color: #60a5fa; }
+html.dark .mobile-tabs button.tab-active:before { background: linear-gradient(90deg,#2563eb,#60a5fa); }
+html.dark .demo-toggle { background: #243044; color: #f8fafc; }
 
