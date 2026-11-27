@@ -7,7 +7,27 @@ export function FactoryProvider({ initialValue, children }) {
   const [data, setData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? { ...initialValue, ...JSON.parse(saved) } : initialValue;
+      if (!saved) return initialValue;
+      const parsed = JSON.parse(saved);
+      const mergeById = (seed, current) => seed.map((item) => ({ ...item, ...(current || []).find((entry) => entry.id === item.id) }));
+      const oldAlerts = (parsed.alerts || []).map((alert) => ({
+        ...alert,
+        code: alert.code || (alert.message?.includes('No eligible worker') ? 'workerShortage' : alert.message?.includes('service') ? 'upcomingMaintenance' : 'workerShortage'),
+        severity: alert.severity || alert.type || 'warning',
+        createdAt: alert.createdAt || new Date().toISOString(),
+        read: Boolean(alert.read),
+      }));
+      return {
+        ...initialValue,
+        ...parsed,
+        workers: mergeById(initialValue.workers, parsed.workers),
+        machines: mergeById(initialValue.machines, parsed.machines),
+        production: mergeById(initialValue.production || [], parsed.production).map((item) => ({ ...item, unitsMade: item.unitsMade ?? item.produced ?? 0 })),
+        simulation: { ...initialValue.simulation, ...(parsed.simulation || {}) },
+        incidents: parsed.incidents || initialValue.incidents || [],
+        alerts: oldAlerts,
+        allocations: { ...initialValue.allocations, ...(parsed.allocations || {}) },
+      };
     } catch {
       return initialValue;
     }
