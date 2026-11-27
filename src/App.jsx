@@ -21,6 +21,14 @@ const reportTypes = ['Hazard','Near-miss','Injury'];
 const downtimeReasons = ['Breakdown','No operator','Material shortage','Changeover'];
 const fixCauses = ['Electrical','Mechanical','Hydraulic','Wear','Other'];
 const reportTypeKeys = { Hazard:'hazard','Near-miss':'nearMiss',Injury:'injury' };
+const accentOptions = [
+  {id:'blue',label:'Blue',swatch:'#2563eb'},
+  {id:'gray',label:'Gray',swatch:'#64748b'},
+  {id:'brown',label:'Brown',swatch:'#8b6b4b'},
+  {id:'white',label:'White',swatch:'#ffffff'},
+  {id:'black',label:'Black',swatch:'#111827'},
+  {id:'light-green',label:'Light green',swatch:'#86efac'},
+];
 const relatedSkills = { CNC:['Quality'],Welding:['Assembly'],Assembly:['Welding'],Quality:['CNC'] };
 const statusKeys = { operating:'operating',idle:'idle',fault:'fault',maintenanceScheduled:'scheduled' };
 const alertKeys = { productionBelow:'productionBelow',excessiveDowntime:'excessiveDowntime',workerShortage:'workerShortage',upcomingMaintenance:'upcomingMaintenance',overdueMaintenance:'overdue',safetyIncident:'safetyIncident',machineFault:'machineFault',runningHot:'runningHot' };
@@ -57,6 +65,7 @@ export default function App() {
   const [demoOpen,setDemoOpen]=useState(false);
   const [summaryOpened,setSummaryOpened]=useState(false);
   const [darkMode,setDarkMode]=useState(()=>localStorage.getItem('theme')==='dark');
+  const [accent,setAccent]=useState(()=>localStorage.getItem('accentColor')||'blue');
   const lang=data.language||'en';
   const t=(key)=>translations[lang]?.[key]||translations.en[key]||key;
   const shiftWorkers=useMemo(()=>data.workers.filter((worker)=>worker.shift===data.shift),[data.workers,data.shift]);
@@ -81,6 +90,11 @@ export default function App() {
     document.documentElement.classList.toggle('dark',darkMode);
     localStorage.setItem('theme',darkMode?'dark':'light');
   },[darkMode]);
+
+  useEffect(()=>{
+    document.documentElement.dataset.accent=accent;
+    localStorage.setItem('accentColor',accent);
+  },[accent]);
 
   useEffect(()=>{
     if(!data.simulation.running)return undefined;
@@ -320,7 +334,7 @@ export default function App() {
 
         {page==='Shift Summary'&&<ShiftSummary data={data} t={t} totalUnits={totalUnits} totalTarget={totalTarget} incidents={thisShiftIncidents} onNavigate={navigate}/>}
 
-        {page==='Settings'&&<section className="section-card settings-screen"><SectionTitle title={t('navSettings')} detail="Demo preferences"/><div className="settings-row"><span><b>{t('language')}</b><small>English / मराठी / हिंदी</small></span><select value={lang} onChange={(event)=>setData((current)=>({...current,language:event.target.value}))}><option value="en">English</option><option value="mr">मराठी</option><option value="hi">हिंदी</option></select></div><div className="settings-row"><span><b>Appearance</b><small>Light and dark themes</small></span><button className="confirm-button" onClick={toggleTheme}>{darkMode?<Sun size={16}/>:<Moon size={16}/>} {darkMode?'Light mode':'Dark mode'}</button></div><div className="settings-row"><span><b>{t('demoMode')}</b><small>Clear simulation activity and restore seed data</small></span><button className="danger-button" onClick={()=>setModal({type:'resetDemo'})}>{t('resetDemo')}</button></div></section>}
+        {page==='Settings'&&<section className="section-card settings-screen"><SectionTitle title={t('navSettings')} detail="Demo preferences"/><div className="settings-row"><span><b>{t('language')}</b><small>English / मराठी / हिंदी</small></span><select value={lang} onChange={(event)=>setData((current)=>({...current,language:event.target.value}))}><option value="en">English</option><option value="mr">मराठी</option><option value="hi">हिंदी</option></select></div><div className="settings-row"><span><b>Appearance</b><small>Light and dark themes</small></span><button className="confirm-button" onClick={toggleTheme}>{darkMode?<Sun size={16}/>:<Moon size={16}/>} {darkMode?'Light mode':'Dark mode'}</button></div><div className="accent-picker"><div><b>Color theme</b><small>Choose an accent color</small></div><div className="accent-options" role="group" aria-label="Color theme">{accentOptions.map((option)=><button key={option.id} type="button" className="accent-option" aria-label={`${option.label} color theme`} aria-pressed={accent===option.id} onClick={()=>setAccent(option.id)}><span className="accent-swatch-dot" style={{background:option.swatch}}/>{option.label}{accent===option.id&&<Check size={15}/>}</button>)}</div></div><div className="settings-row"><span><b>{t('demoMode')}</b><small>Clear simulation activity and restore seed data</small></span><button className="danger-button" onClick={()=>setModal({type:'resetDemo'})}>{t('resetDemo')}</button></div></section>}
 
         <footer className="page-footer"><span>Indus_Core · {t('dashboard')}</span><span>All data is simulated · Saved on this device</span></footer>
       </main>
