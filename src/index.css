@@ -512,3 +512,83 @@ html.dark .text-link { color: #4ade80; }
   .modal-card h2 { font-size: 18px; }
 }
 
+/* Indus_Core visual refresh inspired by the supplied analytics dashboard. */
+:root:not(.dark) {
+  --ink: #18233e;
+  --muted: #77839b;
+  --line: #e7ecf5;
+  --paper: #ffffff;
+  --accent: #4f46e5;
+  --accent-strong: #3730a3;
+  background: #f3f7ff;
+}
+:root:not(.dark) body { background: linear-gradient(135deg,#f1f7ff 0%,#f8f7ff 52%,#f4f8ff 100%); color: var(--ink); }
+:root:not(.dark) .sidebar { background: rgba(255,255,255,.96); border-color: #e6ebf5; box-shadow: 8px 0 32px rgba(49,68,117,.045); }
+:root:not(.dark) .brand { color: #18233e; }
+:root:not(.dark) .brand-mark { background: linear-gradient(140deg,#4f46e5,#7c3aed); color: #fff; box-shadow: 0 7px 18px rgba(79,70,229,.2); }
+:root:not(.dark) .plant-select { background: #f7f9ff; border-color: #e6ebf6; }
+:root:not(.dark) .plant-icon { background: linear-gradient(140deg,#e8eaff,#f1eaff); color: #5549d7; }
+:root:not(.dark) .nav-link { color: #68758f; transition: background .18s ease,color .18s ease,transform .18s ease; }
+:root:not(.dark) .nav-link:hover { background: #f1f3ff; color: #4438ca; }
+:root:not(.dark) .nav-link.active { background: linear-gradient(100deg,#eef0ff,#f3edff); color: #4338ca; }
+:root:not(.dark) .nav-link.active:before { background: linear-gradient(180deg,#4f46e5,#8b5cf6); }
+:root:not(.dark) .topbar { background: rgba(255,255,255,.92); border-color: #e8edf7; box-shadow: 0 6px 22px rgba(49,68,117,.05); }
+:root:not(.dark) .simulation-toolbar { background: rgba(255,255,255,.9); border-color: #e7ecf5; box-shadow: 0 5px 18px rgba(49,68,117,.035); backdrop-filter: blur(12px); }
+:root:not(.dark) .content { color: #18233e; }
+:root:not(.dark) .page-heading h1 { color: #17223b; letter-spacing: -.8px; }
+:root:not(.dark) .eyebrow { color: #58688b; }
+:root:not(.dark) .heading-clock { background: linear-gradient(135deg,#eef2ff,#f4efff); border-color: #e3e6fb; }
+:root:not(.dark) .heading-clock b { color: #4f46e5; }
+:root:not(.dark) .dash-card,
+:root:not(.dark) .section-card,
+:root:not(.dark) .insight-card,
+:root:not(.dark) .machine-card,
+:root:not(.dark) .crew-card,
+:root:not(.dark) .matrix-wrap,
+:root:not(.dark) .module-card,
+:root:not(.dark) .module-panel,
+:root:not(.dark) .maintenance-card,
+:root:not(.dark) .modal-card,
+:root:not(.dark) .demo-panel {
+  background: rgba(255,255,255,.96);
+  border-color: #e6ebf5;
+  border-radius: 15px;
+  box-shadow: 0 9px 28px rgba(51,69,115,.065);
+}
+:root:not(.dark) .dash-card-title h2,
+:root:not(.dark) .section-header h2,
+:root:not(.dark) .section-title h2,
+:root:not(.dark) .machine-info h3,
+:root:not(.dark) .maintenance-heading h3,
+:root:not(.dark) .module-panel h2 { color: #192540; }
+:root:not(.dark) .title-icon { background: linear-gradient(135deg,#eceeff,#f3eaff); color: #5546dc; }
+:root:not(.dark) .metric-value,
+:root:not(.dark) .output-summary strong { color: #18233e; }
+:root:not(.dark) .progress-track { background: #e8edfa; }
+:root:not(.dark) .progress-track i,
+:root:not(.dark) .clock-progress i { background: linear-gradient(90deg,#4f46e5,#8b5cf6); }
+:root:not(.dark) .shift-toggle button.selected { background: #eef0ff; border-color: #d9dcff; color: #4438ca; }
+:root:not(.dark) .small-action,
+:root:not(.dark) .speed-button { background: #eff0ff; border-color: #dcdefe; color: #4338ca; }
+:root:not(.dark) .small-action:hover,
+:root:not(.dark) .speed-button:hover { background: #e5e7ff; }
+:root:not(.dark) .start-button,
+:root:not(.dark) .suggest-button { background: linear-gradient(100deg,#22c55e,#16a765); box-shadow: 0 5px 14px rgba(34,197,94,.16); }
+:root:not(.dark) .start-button:hover:not(:disabled),
+:root:not(.dark) .suggest-button:hover { background: linear-gradient(100deg,#16a765,#128452); }
+:root:not(.dark) .confirm-button { background: #fff; border-color: #cdd3ff; color: #4338ca; }
+:root:not(.dark) .confirm-button:hover:not(:disabled) { background: #f1f1ff; }
+:root:not(.dark) .text-link { color: #4f46e5; }
+:root:not(.dark) .suggestion-reason { color: #53627d; }
+:root:not(.dark) .demo-toggle { background: #202846; box-shadow: 0 6px 18px rgba(29,39,70,.18); }
+:root:not(.dark) .mobile-tabs { background: rgba(255,255,255,.97); border-color: #e7ecf5; box-shadow: 0 -8px 24px rgba(45,62,104,.06); }
+:root:not(.dark) .mobile-tabs button.tab-active { color: #4f46e5; }
+:root:not(.dark) .mobile-tabs button.tab-active:before { background: linear-gradient(90deg,#4f46e5,#8b5cf6); }
+@media(max-width:720px) {
+  :root:not(.dark) .topbar { border-radius: 0 0 14px 14px; }
+  :root:not(.dark) .simulation-toolbar { border-radius: 0 0 14px 14px; }
+  :root:not(.dark) .dash-card,
+  :root:not(.dark) .section-card,
+  :root:not(.dark) .machine-card { border-radius: 14px; }
+}
+
