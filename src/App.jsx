@@ -107,9 +107,10 @@ export default function App() {
         const operator=current.workers.find((worker)=>worker.id===id&&worker.shift===current.shift&&worker.present);
         return {...machine,assignedWorkerId:operator?.id||null,status:operator?'operating':'idle',downtimeReason:operator?machine.downtimeReason:'No operator'};
       });
+      const workers=current.workers.map((worker)=>worker.shift===current.shift?{...worker,assignedMachineId:machines.find((machine)=>machine.assignedWorkerId===worker.id)?.id||null}:worker);
       let alerts=[...current.alerts];
       if(machines.some((machine)=>machine.status==='idle'&&!machine.assignedWorkerId))alerts=uniqueAlert(alerts,'workerShortage','warning','Worker shortage: one or more machines are unstaffed');
-      return {...current,machines,simulation:{...current.simulation,running:true,completed:false}};
+      return {...current,machines,workers,simulation:{...current.simulation,running:true,completed:false}};
     });
     setSummaryOpened(false);
   }
@@ -157,7 +158,7 @@ export default function App() {
       if(!machine)return current;
       const timestamp=new Date().toISOString();
       const machines=current.machines.map((item)=>item.id===machineId?{...item,status:'fault',faultHistory:[...item.faultHistory,{timestamp,cause:'Breakdown'}],downtimeStartedAt:current.simulation.elapsedMinutes,downtimeReason:'Breakdown',longDowntimeAlertSent:false,assignedWorkerId:null}:item);
-      const workers=current.workers.map((worker)=>worker.assignedMachineId===machineId?{...worker,assignedMachineId:null}:worker);
+      const workers=current.workers.map((worker)=>worker.id===machine.assignedWorkerId?{...worker,assignedMachineId:null}:worker);
       const allocations={...current.allocations};
       for(const shift of Object.keys(allocations))allocations[shift]={...allocations[shift],[machineId]:''};
       const alerts=uniqueAlert(current.alerts,'machineFault','critical',`${machine.name} fault reported`,{machineId,machineName:machine.name,dedupeKey:`fault:${machineId}:${timestamp}`});
@@ -207,7 +208,7 @@ export default function App() {
           alerts=[{id:`replacement-${Date.now()}`,code:'workerShortage',severity:replacement?'info':'warning',message,createdAt:new Date().toISOString(),read:false},...alerts];
         }
       }
-      const workers=current.workers.map((item)=>item.id===worker.id?{...item,present:!item.present,assignedMachineId:becomingAbsent?null:item.assignedMachineId}:item);
+      const workers=current.workers.map((item)=>item.shift===worker.shift?{...item,present:item.id===worker.id?!item.present:item.present,assignedMachineId:Object.keys(assignments).find((machineId)=>assignments[machineId]===item.id)||null}:item);
       if(!becomingAbsent){const machine=machines.find((item)=>assignments[item.id]===worker.id);if(machine){machine.assignedWorkerId=worker.id;}}
       return {...current,workers,machines,allocations:{...current.allocations,[worker.shift]:assignments},alerts};
     });
@@ -367,3 +368,4 @@ function ShiftSummary({data,t,totalUnits,totalTarget,incidents,onNavigate}){
   const maxReason=Math.max(1,...Object.values(downtimeBreakdown));
   return <div className="summary-grid"><section className="section-card summary-main"><SectionTitle title={t('shiftComplete')} detail={`${data.shift} shift · ${formatClock(data.shift,data.simulation.elapsedMinutes)}`}/><div className="summary-total"><b>{totalUnits}</b><span>/ {totalTarget} {t('units')} · {totalTarget?Math.round(totalUnits/totalTarget*100):0}%</span></div><ProgressBar value={totalTarget?totalUnits/totalTarget*100:0}/></section><section className="section-card"><SectionTitle title={t('downtime')} detail={`${totalDowntime} simulated minutes total`}/>{data.machines.map((machine)=><div className="module-row" key={machine.id}><span>{machine.name}</span><b>{machine.downtimeMinutes} min</b></div>)}</section><section className="section-card"><SectionTitle title={t('downtimeReason')}/>{Object.entries(downtimeBreakdown).map(([reason,minutes])=><div className="chart-row" key={reason}><span>{reason}</span><div className="progress-track"><i style={{width:`${minutes/maxReason*100}%`}}/></div><b>{minutes}m</b></div>)}</section><section className="section-card"><SectionTitle title={t('utilisation')}/>{data.workers.filter((worker)=>worker.shift===data.shift&&worker.present).map((worker)=><div className="chart-row" key={worker.id}><span>{worker.name}</span><div className="progress-track"><i style={{width:`${Math.min(100,worker.runningMinutes/(data.simulation.shiftLengthMinutes||480)*100)}%`}}/></div><b>{Math.round(worker.runningMinutes/(data.simulation.shiftLengthMinutes||480)*100)}%</b></div>)}</section><section className="section-card"><SectionTitle title={t('incidentsThisShift')} detail={`${incidents.length} reported`}/>{incidents.length?incidents.map((incident)=><div className="module-row" key={incident.id}><span>{incident.type} · {incident.location}</span><b>{incident.status}</b></div>):<EmptyState text={t('noIncidents')}/>}</section><section className="section-card"><SectionTitle title={t('maintenanceNeed')}/>{data.machines.filter((machine)=>machine.maintenanceState||machine.status==='fault'||isChronic(machine)).map((machine)=><div className="module-row" key={machine.id}><span>{machine.name}</span><MaintenanceBadges machine={machine} t={t}/></div>)}</section><section className="insight-card"><b>{t('insight')}</b><p>{insight}</p><button className="text-link" onClick={()=>onNavigate('Dashboard')}>Back to dashboard →</button></section></div>;
 }
+
