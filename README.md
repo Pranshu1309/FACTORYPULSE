@@ -15,3 +15,4 @@ A mobile-first factory management demo with simulated data. The Shift Planner st
 3. Open the local address printed by Vite, usually `http://localhost:5173`.
 
 The browser saves demo changes in local storage. Use the same browser to keep seeing them.
+
