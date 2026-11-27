@@ -45,3 +45,4 @@ export function useFactoryData() {
   if (!context) throw new Error('useFactoryData must be used within FactoryProvider');
   return context;
 }
+
