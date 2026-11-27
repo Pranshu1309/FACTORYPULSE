@@ -103,3 +103,4 @@ export function advanceSimulation(data) {
   return {...data,workers,machines,production,alerts,simulation:{...sim,running:!completed,elapsedMinutes:elapsed,completed,paceAlertSent,downtimeByReason}};
 }
 
+
